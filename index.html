@@ -53,13 +53,13 @@
 
         h1 {
             margin: 0;
-            font-size: 2.4rem;
+            font-size: 2.2rem;
             letter-spacing: 1.5px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
         .subtitle {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             margin-top: 10px;
             opacity: 0.95;
             font-weight: 300;
@@ -90,7 +90,7 @@
         /* 三回章節卡片 */
         .chapters-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
@@ -115,7 +115,7 @@
 
         .chapter-card h3 {
             margin-top: 5px;
-            font-size: 1.25rem;
+            font-size: 1.2rem;
         }
         
         .c1 h3 { color: #2e7d32; }
@@ -137,7 +137,7 @@
         .c3 .tag { background: #2196F3; }
 
         .chapter-card p {
-            font-size: 0.93rem;
+            font-size: 0.92rem;
             line-height: 1.6;
             margin: 6px 0;
             color: #444;
@@ -155,7 +155,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             padding-bottom: 10px;
             border-bottom: 2px dashed #ddd;
         }
@@ -163,14 +163,27 @@
         .map-header h2 {
             margin: 0;
             color: var(--primary-color);
-            font-size: 1.4rem;
+            font-size: 1.35rem;
         }
 
+        .map-hint {
+            font-size: 0.85rem;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        /* 地圖高度：電腦版 650px，手機版 420px */
         #map {
             width: 100%;
-            height: 720px;
+            height: 650px;
             border-radius: 10px;
             border: 1px solid #ccc;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.7rem; }
+            .page-container { padding: 12px; }
+            #map { height: 420px; }
         }
     </style>
 </head>
@@ -218,6 +231,7 @@
                 <h2>🗺️ 探索百年堤防之水文化與空間圖資</h2>
                 <span style="color: #666; font-size: 0.9rem;">Leaflet &amp; QGIS 整合呈現</span>
             </div>
+            <div class="map-hint">💡 操作提示：電腦端請按住 <strong>Ctrl</strong> 鍵滑動滾輪縮放地圖；手機端請使用<strong>雙指</strong>縮放與拖曳。</div>
             
             <!-- 地圖掛載節點 -->
             <div id="map"></div>
@@ -225,7 +239,7 @@
 
     </div>
 
-    <!-- 腳本引用 (確保與 QGIS 導出元件完全相容) -->
+    <!-- 腳本引用 -->
     <script src="js/qgis2web_expressions.js"></script>
     <script src="js/leaflet.js"></script>
     <script src="js/L.Control.Layers.Tree.min.js"></script>
@@ -252,9 +266,30 @@
     <script src="data/_RISKASSESSMENT_9.js"></script>
 
     <script>
+    // 判斷是否為行動裝置
+    var isMobile = L.Browser.mobile;
+
     var map = L.map('map', {
-        zoomControl:false, maxZoom:28, minZoom:1
+        zoomControl: false,
+        maxZoom: 28,
+        minZoom: 1,
+        scrollWheelZoom: false,         // 平常關閉滾輪，避免搶走網頁上下滾動
+        dragging: !isMobile,            // 手機版單指不拖曳地圖，保留正常滑動頁面
+        touchZoom: true                 // 手機版允許雙指縮放
     }).fitBounds([[23.79858129823688,120.4125658706509],[23.873582031012944,120.54149397187106]]);
+
+    // 電腦版：按住 Ctrl (或 Mac Cmd) 才啟用滾輪縮放
+    window.addEventListener('keydown', function(e) {
+        if (e.ctrlKey || e.metaKey) {
+            map.scrollWheelZoom.enable();
+        }
+    });
+    window.addEventListener('keyup', function(e) {
+        if (!e.ctrlKey && !e.metaKey) {
+            map.scrollWheelZoom.disable();
+        }
+    });
+
     var hash = new L.Hash(map);
     map.attributionControl.setPrefix('<a href="https://github.com/qgis2web/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
     var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
