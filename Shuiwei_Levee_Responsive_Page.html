@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>百年堤防活化 - 水尾堤防</title>
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #e6f2ff;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+        }
+        body { 
+            font-family: 'Helvetica Neue', Arial, 'Noto Sans TC', sans-serif; 
+            line-height: 1.6; 
+            color: var(--text-color); 
+            margin: 0; 
+            padding: 0; 
+            background-color: var(--bg-color); 
+        }
+        header { 
+            background-color: var(--primary-color); 
+            color: white; 
+            padding: 3rem 1rem; 
+            text-align: center; 
+        }
+        header h1 { 
+            margin: 0 0 1rem 0; 
+            font-size: 2.5rem; 
+        }
+        header p { 
+            font-size: 1.2rem; 
+            margin: 0; 
+            opacity: 0.9; 
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 2rem; 
+        }
+        section { 
+            background: white; 
+            margin-bottom: 2rem; 
+            padding: 2.5rem; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+        }
+        h2 { 
+            color: var(--primary-color); 
+            border-bottom: 2px solid var(--secondary-color); 
+            padding-bottom: 0.5rem; 
+            margin-top: 0; 
+        }
+        .vision-text {
+            font-size: 1.1rem;
+            color: #555;
+        }
+        .grid-3 { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 1.5rem; 
+            margin-top: 1.5rem;
+        }
+        .card { 
+            background: var(--secondary-color); 
+            padding: 1.5rem; 
+            border-left: 4px solid var(--primary-color); 
+            border-radius: 6px; 
+            transition: transform 0.2s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card h3 { 
+            color: var(--primary-color); 
+            margin-top: 0; 
+        }
+        .iframe-container { 
+            position: relative; 
+            overflow: hidden; 
+            width: 100%; 
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .iframe-container iframe { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            bottom: 0; 
+            right: 0; 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+        }
+        footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #666; 
+            font-size: 0.9rem; 
+            background: white;
+            border-top: 1px solid #eee;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            section { padding: 1.5rem; }
+            header h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>百年堤防活化 - 水尾堤防</h1>
+        <p>留住治水記憶，走進河岸日常</p>
+    </header>
+    
+    <div class="container">
+        <!-- 規劃願景區塊 -->
+        <section>
+            <h2>計畫願景</h2>
+            <div class="vision-text">
+                <p>堤防不僅是防洪設施，更成為承載歷史、教育與文化傳承的場域。以水尾堤防百年歷史變遷，透過「人、水、神」三者互動，形成連續的「走讀軸線」。</p>
+                <p>結合步行、休憩及文化導覽，保留傳統治水工法，打造兼具「共生、共存、共榮」的水岸環境，讓百年堤防成為認識地方故事的戶外說書教室。</p>
+            </div>
+        </section>
+        
+        <!-- 三回書走讀軸線區塊 -->
+        <section>
+            <h2>母親河開口 — 水尾三回書</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>第一回：初源 (百川灌溉、廟宇寧心)</h3>
+                    <p><strong>區域重點：</strong>廟埕後花園、水圳溯源區</p>
+                    <p>以人本友善環境改善廟埕後花園，修復地坪與坡面；水圳溯源區則重現台灣第一條官設水圳「莿仔埤圳」與永基二圳的歷史意象，增設水位觀測亭及黑泥意象鋪面。</p>
+                </div>
+                <div class="card">
+                    <h3>第二回：渡守 (神祇庇佑、防洪護民)</h3>
+                    <p><strong>區域重點：</strong>治水文化講古區、水與神祇故事篇</p>
+                    <p>保留排樁丁壩與串磚坡面現址，並設立互動解說設施。融合媽祖潦溪信仰文化與西螺大橋景觀，設置景觀瞭望台，提供全視角的自然與人文體驗。</p>
+                </div>
+                <div class="card">
+                    <h3>第三回：漫悅 (路廊繁生、自然樣貌)</h3>
+                    <p><strong>區域重點：</strong>潮洋厝堤防菜公段、自然蔓草區</p>
+                    <p>維持生態低擾動的自然蔓草樣貌。於潮洋厝堤防段延伸道路擋牆，並配合媽祖潦溪路線，設置充滿社區意象的馬賽克圖騰與休憩平台。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 議題圖資地圖區塊 -->
+        <section>
+            <h2>探索百年堤防之水文化與信仰地圖</h2>
+            <p>整合百年堤防周邊的水文化、地方信仰與設施資訊。透過線上地圖包，了解西螺大橋、溪州糖廠、傳統工法及各處特色位置，認識堤防與地方生活的連結。</p>
+            <div class="iframe-container">
+                <iframe src="https://www.google.com/maps/d/embed?mid=1tM5LfOXmiyFE7ePv1P4s2J6UqTxmYgc&ll=23.82723960926939,120.46341451612675&z=13"></iframe>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <p>設計與工程資訊來源：禹安工程顧問股份有限公司｜濁水溪水尾堤防段整體環境營造工程</p>
+    </footer>
+</body>
+</html>
