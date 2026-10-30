@@ -3,9 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>百年堤防活化 - 水尾堤防</title>
 
     <!-- Leaflet & QGIS Plugins Stylesheets -->
@@ -14,41 +12,39 @@
     <link rel="stylesheet" href="css/qgis2web.css">
     <link rel="stylesheet" href="css/fontawesome-all.min.css">
     <link rel="stylesheet" href="css/leaflet.photon.css">
-    <link rel="stylesheet" href="css/MarkerCluster.css">
-    <link rel="stylesheet" href="css/MarkerCluster.Default.css">
 
     <style>
-        :root {
-            --primary-color: #004d99;
-            --accent-color: #ff9900;
-            --bg-color: #f0f8ff;
-            --text-main: #333333;
-        }
-        
-        body, html {
-            margin: 0;
-            padding: 0;
+        /* 強制覆蓋 qgis2web.css 的 overflow:hidden，解鎖網頁滾動條 */
+        html, body {
+            width: 100% !important;
+            height: auto !important;
+            min-height: 100% !important;
+            overflow-x: hidden !important;
+            overflow-y: auto !important;
+            margin: 0 !important;
+            padding: 0 !important;
             font-family: 'Helvetica Neue', Arial, 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: #f0f8ff;
+            color: #333333;
+            -webkit-overflow-scrolling: touch;
         }
 
         .page-container {
             max-width: 1300px;
             margin: 0 auto;
             padding: 20px;
+            padding-bottom: 80px; /* 底部保留空白，方便手指滑到底 */
         }
 
         /* 標題橫幅 */
         header {
-            background: linear-gradient(135deg, var(--primary-color), #00aaff);
+            background: linear-gradient(135deg, #004d99, #00aaff);
             color: white;
             padding: 35px 20px;
             border-radius: 15px;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             margin-bottom: 25px;
-            position: relative;
         }
 
         h1 {
@@ -162,28 +158,28 @@
 
         .map-header h2 {
             margin: 0;
-            color: var(--primary-color);
+            color: #004d99;
             font-size: 1.35rem;
         }
 
         .map-hint {
             font-size: 0.85rem;
             color: #777;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
-        /* 地圖高度：電腦版 650px，手機版 420px */
         #map {
-            width: 100%;
-            height: 650px;
+            width: 100% !important;
+            height: 600px !important;
             border-radius: 10px;
             border: 1px solid #ccc;
+            position: relative;
         }
 
         @media (max-width: 768px) {
-            h1 { font-size: 1.7rem; }
-            .page-container { padding: 12px; }
-            #map { height: 420px; }
+            h1 { font-size: 1.6rem; }
+            .page-container { padding: 12px; padding-bottom: 60px; }
+            #map { height: 400px !important; }
         }
     </style>
 </head>
@@ -233,7 +229,6 @@
             </div>
             <div class="map-hint">💡 操作提示：電腦端請按住 <strong>Ctrl</strong> 鍵滑動滾輪縮放地圖；手機端請使用<strong>雙指</strong>縮放與拖曳。</div>
             
-            <!-- 地圖掛載節點 -->
             <div id="map"></div>
         </div>
 
@@ -247,7 +242,6 @@
     <script src="js/leaflet-svg-shape-markers.min.js"></script>
     <script src="js/leaflet.rotatedMarker.js"></script>
     <script src="js/leaflet.pattern.js"></script>
-    <script src="js/leaflet-hash.js"></script>
     <script src="js/Autolinker.min.js"></script>
     <script src="js/rbush.min.js"></script>
     <script src="js/labelgun.min.js"></script>
@@ -266,19 +260,18 @@
     <script src="data/_RISKASSESSMENT_9.js"></script>
 
     <script>
-    // 判斷是否為行動裝置
     var isMobile = L.Browser.mobile;
 
     var map = L.map('map', {
         zoomControl: false,
         maxZoom: 28,
         minZoom: 1,
-        scrollWheelZoom: false,         // 平常關閉滾輪，避免搶走網頁上下滾動
-        dragging: !isMobile,            // 手機版單指不拖曳地圖，保留正常滑動頁面
-        touchZoom: true                 // 手機版允許雙指縮放
+        scrollWheelZoom: false,  // 停用預設滾輪，交還網頁滾動控制權
+        dragging: !isMobile,     // 手機單指禁止拖地圖，優先滑動網頁
+        touchZoom: true
     }).fitBounds([[23.79858129823688,120.4125658706509],[23.873582031012944,120.54149397187106]]);
 
-    // 電腦版：按住 Ctrl (或 Mac Cmd) 才啟用滾輪縮放
+    // 電腦端：Ctrl + 滾輪縮放地圖
     window.addEventListener('keydown', function(e) {
         if (e.ctrlKey || e.metaKey) {
             map.scrollWheelZoom.enable();
@@ -290,8 +283,7 @@
         }
     });
 
-    var hash = new L.Hash(map);
-    map.attributionControl.setPrefix('<a href="https://github.com/qgis2web/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+    map.attributionControl.setPrefix('<a href="https://github.com/qgis2web/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
     var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
 
     function removeEmptyRowsFromPopupContent(content, feature) {
@@ -331,10 +323,7 @@
                 audio.src = src;
                 imgTd.parentNode.replaceChild(audio, imgTd);
                 popup._contentNode.classList.add('media');
-                setTimeout(function() {
-                    popup.setContent(tempDiv.innerHTML);
-                    popup.update();
-                }, 10);
+                setTimeout(function() { popup.setContent(tempDiv.innerHTML); popup.update(); }, 10);
             } else if (/\.(mp4|webm|ogg|mov)$/i.test(src)) {
                 var video = document.createElement('video');
                 video.controls = true;
@@ -345,13 +334,8 @@
                 video.style.maxWidth = "60vw";
                 imgTd.parentNode.replaceChild(video, imgTd);
                 popup._contentNode.classList.add('media');
-                video.addEventListener('loadedmetadata', function() {
-                    popup.update();
-                });
-                setTimeout(function() {
-                    popup.setContent(tempDiv.innerHTML);
-                    popup.update();
-                }, 10);
+                video.addEventListener('loadedmetadata', function() { popup.update(); });
+                setTimeout(function() { popup.setContent(tempDiv.innerHTML); popup.update(); }, 10);
             } else {
                 popup._contentNode.classList.remove('media');
             }
